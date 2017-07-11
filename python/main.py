@@ -94,6 +94,47 @@ class Game:
                 new_board["Next"] = 3 - self.Next()
 		return Game(board=new_board)
 
+
+
+        def min_max(self,valid_moves):
+                if self._board["Next"]==1:
+                        return max(valid_moves)
+                else:
+                        return min(valid_moves)
+
+        def max(valid_moves):# for 1
+                evaluation_board=[
+                        [ 45, -11,  4, -1, -1,  4, -11,  45],
+                        [-11, -16, -1, -3, -3, -1, -16, -11],
+                        [  4,  -1,  2, -1, -1,  2,  -1,   4],
+                        [ -1,  -3, -1,  0,  0, -1,  -3,  -1],
+                        [ -1,  -3, -1,  0,  0, -1,  -3,  -1],
+                        [  4,  -1,  2, -1, -1,  2,  -1,   4],
+                        [-11, -16, -1, -3, -3, -1, -16, -11],
+                        [ 45, -11,  4, -1, -1,  4, -11,  45]
+                ]
+                largest_score=-17
+                move=[]
+                for i in range(valid_moves):
+                        if largest_score<evaluation_board[valid_moves[i][0]-1][valid_moves[i][1]-1]:
+                                largest_score=evaluation_board[valid_moves[i][0]-1][valid_moves[i][1]-1]
+                                move=valid_moves[i]
+
+                return move
+
+        def min(valid_moves):# for 1
+                return valid_moves[0]
+
+#四隅、連続してるところ
+
+
+
+
+
+
+
+
+
 # Returns piece on the board.
 # 0 for no pieces, 1 for player 1, 2 for player 2.
 # None for coordinate out of scope.
@@ -137,7 +178,8 @@ Paste JSON here:<p/><textarea name=json cols=80 rows=24></textarea>
 <p/><input type=submit>
 </form>
 </body>
-""")
+"""
+)
           return
         else:
           g = Game(self.request.get('json'))
@@ -161,9 +203,20 @@ Paste JSON here:<p/><textarea name=json cols=80 rows=24></textarea>
                 # TO STEP STUDENTS:
                 # You'll probably want to change how this works, to do something
                 # more clever than just picking a random move.
-	    	move = random.choice(valid_moves)
-    		self.response.write(PrettyMove(move))
+	    	move = g.min_max(valid_moves)#random.choice(valid_moves)
+    		self.response.write(PrettyMove(move))#PrettyMove(move)
 
 app = webapp2.WSGIApplication([
     ('/', MainHandler)
 ], debug=True)
+
+
+
+
+
+
+
+
+
+
+
