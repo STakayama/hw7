@@ -97,13 +97,23 @@ class Game:
 
 
         def min_max(self,valid_moves):
-                if self._board["Next"]==1:
-                        return self.max_eval(valid_moves)
-                else:
-                        return self.min_eval(valid_moves)
+                #for i in range(0,3):
+                        
+
+                return self.max_eval(valid_moves)
+              #  else:
+                       # return self.min_eval(valid_moves)
+
+        def valid_len(self,num,move_candidate):
+
+                game=self.NextBoardPosition(move_candidate[num])
+                return len(game.ValidMoves())
+		#x = move["Where"][0]
+		#y = move["Where"][1]
+
 
         def max_eval(self,valid_moves):# for 1
-                evaluation_board=[#0~7 ただし四隅が挟まれる危険があるなら-11-6
+                evaluation_board=[#0~7 ただし四隅が挟まれる危険があるなら-11-6?
                         [ 45, -11,  4, -1, -1,  4, -11,  45],
                         [-11, -16, -1, -3, -3, -1, -16, -11],
                         [  4,  -1,  2, -1, -1,  2,  -1,   4],
@@ -114,21 +124,39 @@ class Game:
                         [ 45, -11,  4, -1, -1,  4, -11,  45]
                 ]
                 largest_score=-17
+                move_candidate=[]
                 move=[]
                 for i in range(0,len(valid_moves)):
                         x=valid_moves[i]["Where"][0]-1
                         y=valid_moves[i]["Where"][1]-1
-                        score=evaluation_board[x][y]
-                     #   if abs(mod(x,6))<2 and abs(mod(y,6))<2:#01-02 06-05 10-20 17-27 60-50 66-56 71-72 76-75
-                                
+                        score=evaluation_board[x][y]#同点のやつはリストに残して挟まれるか判定させる？または、得点高いとことれるなら-5
+#if self.NextBoardPosition(move):置けるなら　True
                         if largest_score<score:
+                                #if mod(x,6)<2 and mod(y,6)<2:#01-02 06-05 10-20 17-27 60-50 66-57 71-72 76-75
+                                       # if self._board["Pieces"][]
                                 largest_score=score
                                 move=valid_moves[i]["Where"]
+                                del move_candidate[:]
+                                move_candidate.append(valid_moves[i])
+                        elif largest_score==score:
+                                move_candidate.append(valid_moves[i])
+                if len(move_candidate)<2:
+                        return move#move
+                else:
+                     #   new_board = copy.deepcopy(self._board)
+                        which_move=0
+                        board_candidate=self.valid_len(0,move_candidate)
+                        for j in range(1,len(move_candidate)):
+                                if board_candidate<self.valid_len(j,move_candidate):
+                                        #選択肢増える方 33 31
+                                        board_candidate=self.valid_len(j,move_candidate)
+                                        which_move=j
+                        return move_candidate[which_move]["Where"]
 
-                return move#move
 
         def min_eval(self,valid_moves):
-                return valid_moves[0]
+                            return valid_moves[0]
+
 
 #四隅、連続してるところ
 

@@ -51,7 +51,7 @@ Paste JSON here:<p/><textarea name=json cols=80 rows=24></textarea>
 		fmt.Fprintf(w, "PASS")
 		return
 	}
-	move := moves[rand.Intn(len(moves))]
+	move := moves[rand.Intn(len(moves))] //ここを工夫、現段階はrandom
 	fmt.Fprintf(w, "[%d,%d]", move.Where[0], move.Where[1])
 }
 
@@ -121,7 +121,7 @@ func (b *Board) Get(p Position) Piece {
 
 // Exec runs a move on a given Board, updating the given board, and
 // returning it. Returns error if the move is illegal.
-func (b *Board) Exec(m Move) (*Board, error) {
+func (b *Board) Exec(m Move) (*Board, error) {//min maxの　盤の状態を受け取って
 	if !m.Where.Pass() {
 		if _, err := b.realMove(m); err != nil {
 			return b, err
@@ -205,7 +205,7 @@ func (b *Board) findCaptures(m Move, dir direction) []Position {
 	panic("impossible")
 }
 
-func (b *Board) ValidMoves() []Move {
+func (b *Board) ValidMoves() []Move {//ありうる手を計算
 	var moves []Move
 	for y := 1; y <= 8; y++ {
 		for x := 1; x <= 8; x++ {
