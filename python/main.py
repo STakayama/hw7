@@ -140,7 +140,6 @@ class Game:
                 if len(move_candidate)<2:
                         return move#move
                 else:
-                     #   new_board = copy.deepcopy(self._board)
                         which_move=0
                         board_candidate=self.valid_len(0,move_candidate)
                         for j in range(1,len(move_candidate)):
