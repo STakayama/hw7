@@ -130,10 +130,7 @@ class Game:
                         x=valid_moves[i]["Where"][0]-1
                         y=valid_moves[i]["Where"][1]-1
                         score=evaluation_board[x][y]#同点のやつはリストに残して挟まれるか判定させる？または、得点高いとことれるなら-5
-#if self.NextBoardPosition(move):置けるなら　True
                         if largest_score<score:
-                                #if mod(x,6)<2 and mod(y,6)<2:#01-02 06-05 10-20 17-27 60-50 66-57 71-72 76-75
-                                       # if self._board["Pieces"][]
                                 largest_score=score
                                 move=valid_moves[i]["Where"]
                                 del move_candidate[:]
